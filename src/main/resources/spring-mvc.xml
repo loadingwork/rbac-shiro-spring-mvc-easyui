@@ -12,15 +12,22 @@
 	<!-- mvc注解驱动 -->
 	<mvc:annotation-driven />
 	<!-- 包扫描 -->
-	<context:component-scan
-		base-package="com.lw.mvc.controller" />
+	<context:component-scan base-package="com.lw.mvc.controller" />
+		
+	
+	<!-- 配置静态资源映射 -->
+	<mvc:resources location="/WEB-INF/static/" mapping="/static/**" />
 
 
+	<!-- 配置视图解析器 -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	<!-- 配置消息转换器 -->
+	
 
 
 </beans>
