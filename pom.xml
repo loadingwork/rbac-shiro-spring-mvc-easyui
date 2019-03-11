@@ -1,0 +1,204 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.loadingwork.mvc</groupId>
+	<artifactId>shiro-spring-mvc</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+
+	<!-- 全局属性配置 -->
+	<profiles>
+		<!-- 开发环境 -->
+		<profile>
+			<id>dev</id>
+			<properties>
+				<!-- 部署环境(对应配置文件版本) -->
+				<env>dev</env>
+			</properties>
+			<!-- 设置默认环境 -->
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<!-- 部署环境 -->
+		<profile>
+			<id>release</id>
+			<properties>
+				<!-- 部署环境(对应配置文件版本) -->
+				<env>release</env>
+			</properties>
+		</profile>
+		<!-- 测试环境 -->
+		<profile>
+			<id>test</id>
+			<properties>
+				<!-- 部署环境(对应配置文件版本) -->
+				<env>test</env>
+			</properties>
+		</profile>
+	</profiles>
+
+	<!-- 配置文件 -->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+
+		<docker.image.prefix>mvc</docker.image.prefix>
+	</properties>
+
+	<!-- 添加项目仓库位置 -->
+	<repositories>
+
+		<!-- 阿里云 -->
+		<repository>
+			<id>io.aliyun</id>
+			<url>https://maven.aliyun.com/repository/central</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<!-- spring地址 -->
+		<repository>
+			<id>io.spring.repo.maven.release</id>
+			<url>http://repo.spring.io/release/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<!-- @TODO 忘了以后再加 -->
+
+
+	</repositories>
+
+	<dependencyManagement>
+
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-framework-bom</artifactId>
+				<version>4.3.22.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+
+	</dependencyManagement>
+
+	<!-- 依赖 -->
+	<dependencies>
+		<!-- servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- jstl -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		
+		
+		<!-- spring -->
+		
+		
+		<!-- shiro -->
+		
+		
+		<!-- 工具包 -->
+		
+		
+		<!-- log包 -->
+
+
+
+	</dependencies>
+
+
+
+	<!-- 编译配置 -->
+	<build>
+		<finalName>${project.artifactId}-${env}</finalName>
+		
+		
+		<!-- 资源处理  -->
+		<resources>
+			<!-- 
+				先指定 src/main/resources下所有文件及文件夹为资源文件 
+				关闭这个目录下的变量替换
+			 -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<targetPath>${project.build.directory}/classes</targetPath>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.properties</include>
+					<include>**/*.xsd</include>
+					<include>**/*.dic</include>
+					<include>**/*.ttc</include>
+					<include>**/*.ftl</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+			
+			<!-- 
+				修改为根据env部署环境值，把对应环境的配置文件拷贝到classes目录
+				开启变量替换 如 : ${env}	
+			-->
+			<resource>
+					<directory>deploy/${env}</directory>
+					<targetPath>${project.build.directory}/classes</targetPath>
+					<filtering>true</filtering>
+			</resource>
+			
+		</resources>
+
+		<pluginManagement>
+			<plugins>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.0</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.1.0</version>
+				</plugin>
+				
+				
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<!-- 编译 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<!-- 没有版本号, 也不用插件管理就会使用本地仓库中最新的 -->
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+			<!-- 资源 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
+
+
+</project>
