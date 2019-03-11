@@ -17,12 +17,34 @@
 	<!-- 使用cglib代理 -->
 	<aop:aspectj-autoproxy  proxy-target-class="true" />
 	
-	<!-- Define the realm you want to use to connect to your back-end security datasource: -->
+	<!-- shiro域 -->
 	<bean id="userRealm"  class="com.lw.mvc.shiro.realm.UserRealm" />
+	
+	<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="remember_me_pms_zzokk"/>
+        <property name="httpOnly" value="true"/>
+        <!-- 
+        	配置存储rememberMe Cookie的domain为 一级域名
+	     -->
+        <property name="maxAge" value="2592000"/><!-- 30天 -->
+    </bean>
+	
+	<!-- 会话Cookie模板 -->
+    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <property name="httpOnly" value="true"/>
+    </bean>
+	
+	
+	<!-- sessionManager -->
+	<bean id="sessionManager"  class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		<property name="sessionIdCookie"  ref="sessionIdCookie"   />
+	</bean>
+	
 	
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 	    <!-- Single realm app.  If you have multiple realms, use the 'realms' property instead. -->
 	    <property name="realm" ref="userRealm"/>
+	    <property name="sessionManager"  ref="sessionManager" />
 	</bean>
 	
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
