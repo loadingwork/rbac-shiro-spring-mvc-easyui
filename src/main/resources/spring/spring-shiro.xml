@@ -18,7 +18,7 @@
 	<aop:aspectj-autoproxy  proxy-target-class="true" />
 	
 	<!-- shiro域 -->
-	<bean id="userRealm"  class="com.lw.mvc.shiro.realm.UserRealm" />
+	<bean id="userRealm"  class="com.lgwork.mvc.shiro.realm.UserRealm" />
 	
 	<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
         <constructor-arg value="remember_me_pms_zzokk"/>

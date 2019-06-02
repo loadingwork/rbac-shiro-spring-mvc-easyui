@@ -1,4 +1,4 @@
-package com.lw.mvc.controller;
+package com.lgwork.mvc.controller;
 
 import java.util.Objects;
 

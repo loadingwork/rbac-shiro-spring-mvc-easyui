@@ -1,4 +1,4 @@
-package com.lw.mvc.shiro.realm;
+package com.lgwork.mvc.shiro.realm;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
